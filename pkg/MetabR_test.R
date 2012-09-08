@@ -1417,24 +1417,25 @@ if (criterionPP == "Pval" || criterion == "Qval")
 		PPdata = q.fch
 	}
 
+	PPdata = as.data.frame(PPdata)
 
 	if ( any( colnames(foldchange.all.foldch.dataframe) == paste(control, "-", treatment, sep="") )  )
 	{ PPdata[,1] = 1/as.numeric(as.vector(PPdata[,1])) }
 
 	for (i in 1:nrow(PPdata))
 	{
-		if (!is.na(PPdata[i,2]))
+		if (!is.na(as.numeric(PPdata[i,1])))
 		{
-			if (as.numeric(PPdata[i,1]) >= 1.0)
+			if (as.numeric(PPdata[i,1]) >= as.numeric(1.0))
 			{
-				if (as.numeric(PPdata[i,2]) < t1pq)
+				if (as.numeric(as.matrix(PPdata)[i,2]) < as.numeric(t1pq))
 				{
 					fsig=c(fsig, i)
 					fcolor[i]="#800000"
-					if (as.numeric(PPdata[i,2]) < t2pq)
+					if (as.numeric(as.matrix(PPdata)[i,2]) < as.numeric(t2pq))
 					{
 						fcolor[i]="#FF0000"
-						if (as.numeric(PPdata[i,2]) < t3pq)	
+						if (as.numeric(as.matrix(PPdata)[i,2]) < as.numeric(t3pq))	
 						{
 							fcolor[i]="#FF00FF"
 						}				
@@ -1442,16 +1443,16 @@ if (criterionPP == "Pval" || criterion == "Qval")
 				}
 			}
 	
-			if (as.numeric(PPdata[i,1]) < 1.0)
+			if (as.numeric(PPdata[i,1]) < as.numeric(1.0))
 			{
-				if (as.numeric(PPdata[i,2]) < t1pq)
+				if (as.numeric(as.matrix(PPdata)[i,2]) < as.numeric(t1pq))
 				{
 					fsig=c(fsig, i)
 					fcolor[i]="#000080"
-					if (as.numeric(PPdata[i,2]) < t2pq)
+					if (as.numeric(as.matrix(PPdata)[i,2]) < as.numeric(t2pq))
 					{
 						fcolor[i]="#0000FF"
-						if (as.numeric(PPdata[i,2]) < t3pq)	
+						if (as.numeric(as.matrix(PPdata)[i,2]) < as.numeric(t3pq))	
 						{
 							fcolor[i]="#00FFFF"
 						}				
@@ -1473,23 +1474,25 @@ if (criterionPP == "Fold-change")
 		PPdata = q.fch
 	}
 
+	PPdata = as.data.frame(PPdata)
+
 	if ( any( colnames(foldchange.all.foldch.dataframe) == paste(control, "-", treatment, sep="") )  )
 	{ PPdata[,1] = 1/as.numeric(as.vector(PPdata[,1])) }
 
 	for (i in 1:nrow(PPdata))
 	{
-		if (!is.na(PPdata[i,2]))
+		if (!is.na(as.numeric(PPdata[i,1])))
 		{
-			if (as.numeric(PPdata[i,1]) >= 1.0)
+			if (as.numeric(PPdata[i,1]) >= as.numeric(1.0))
 			{
-				if (as.numeric(PPdata[i,1]) > t1f)
+				if (as.numeric(PPdata[i,1]) > as.numeric(t1f))
 				{
 					fsig=c(fsig, i)
 					fcolor[i]="#800000"
-					if (as.numeric(PPdata[i,1]) > t2f)
+					if (as.numeric(PPdata[i,1]) > as.numeric(t2f))
 					{
 						fcolor[i]="#FF0000"
-						if (as.numeric(PPdata[i,1]) > t3f)	
+						if (as.numeric(PPdata[i,1]) > as.numeric(t3f))	
 						{
 							fcolor[i]="#FF00FF"
 						}				
@@ -1497,16 +1500,16 @@ if (criterionPP == "Fold-change")
 				}
 			}
 	
-			if (as.numeric(PPdata[i,1]) < 1.0)
+			if (as.numeric(PPdata[i,1]) < as.numeric(1.0))
 			{
-				if (as.numeric(PPdata[i,1]) > 1/t1f)
+				if (as.numeric(PPdata[i,1]) < 1/as.numeric(t1f))
 				{
 					fsig=c(fsig, i)
 					fcolor[i]="#000080"
-					if (as.numeric(PPdata[i,1]) > 1/t2f)
+					if (as.numeric(PPdata[i,1]) < 1/as.numeric(t2f))
 					{
 						fcolor[i]="#FF0000"
-						if (as.numeric(PPdata[i,1]) > 1/t3f)	
+						if (as.numeric(PPdata[i,1]) < 1/as.numeric(t3f))	
 						{
 							fcolor[i]="#00FFFF"
 						}				
@@ -1528,23 +1531,25 @@ if (criterionPP == "Pval+Fold-change" || criterionPP == "Qval+Fold-change")
 		PPdata = q.fch
 	}
 
+	PPdata = as.data.frame(PPdata)
+
 	if ( any( colnames(foldchange.all.foldch.dataframe) == paste(control, "-", treatment, sep="") )  )
 	{ PPdata[,1] = 1/as.numeric(as.vector(PPdata[,1])) }
 
 	for (i in 1:nrow(PPdata))
 	{
-		if (!is.na(PPdata[i,2]))
+		if (!is.na(as.numeric(PPdata[i,1])))
 		{
-			if (as.numeric(PPdata[i,1]) >= 1.0)
+			if (as.numeric(PPdata[i,1]) >= as.numeric(1.0))
 			{
-				if (as.numeric(PPdata[i,1]) > t1f && as.numeric(PPdata[i,2]) < t1pq)
+				if (as.numeric(PPdata[i,1]) > as.numeric(t1f) && as.numeric(as.matrix(PPdata)[i,2]) < as.numeric(t1pq))
 				{
 					fsig=c(fsig, i)
 					fcolor[i]="#800000"
-					if (as.numeric(PPdata[i,1]) > t2f && as.numeric(PPdata[i,2]) < t2pq)
+					if (as.numeric(PPdata[i,1]) > as.numeric(t2f) && as.numeric(as.matrix(PPdata)[i,2]) < as.numeric(t2pq))
 					{
 						fcolor[i]="#FF0000"
-						if (as.numeric(PPdata[i,1]) > t3f && as.numeric(PPdata[i,2]) < t3pq)	
+						if (as.numeric(PPdata[i,1]) > as.numeric(t3f) && as.numeric(as.matrix(PPdata)[i,2]) < as.numeric(t3pq))	
 						{
 							fcolor[i]="#FF00FF"
 						}				
@@ -1552,16 +1557,16 @@ if (criterionPP == "Pval+Fold-change" || criterionPP == "Qval+Fold-change")
 				}
 			}
 	
-			if (as.numeric(PPdata[i,1]) < 1.0)
+			if (as.numeric(PPdata[i,1]) < as.numeric(1.0))
 			{
-				if (as.numeric(PPdata[i,1]) > 1/t1f && as.numeric(PPdata[i,2]) < t1pq)
+				if (as.numeric(PPdata[i,1]) < 1/as.numeric(t1f) && as.numeric(as.matrix(PPdata)[i,2]) < as.numeric(t1pq))
 				{
 					fsig=c(fsig, i)
 					fcolor[i]="#000080"
-					if (as.numeric(PPdata[i,1]) > 1/t2f && as.numeric(PPdata[i,2]) < t2pq)
+					if (as.numeric(PPdata[i,1]) < 1/as.numeric(t2f) && as.numeric(as.matrix(PPdata)[i,2]) < as.numeric(t2pq))
 					{
 						fcolor[i]="#FF0000"
-						if (as.numeric(PPdata[i,1]) > 1/t3f && as.numeric(PPdata[i,2]) < t3pq)	
+						if (as.numeric(PPdata[i,1]) < 1/as.numeric(t3f) && as.numeric(as.matrix(PPdata)[i,2]) < as.numeric(t3pq))	
 						{
 							fcolor[i]="#00FFFF"
 						}				
