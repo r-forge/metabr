@@ -43,7 +43,7 @@ echo $contents; } ?>
 
 <!-- end of project description -->
 <p>
-<b> MetabR Files.   </b></font>
+<b> MetabR Files   </b></font>
 <p>
 
 <p> 
