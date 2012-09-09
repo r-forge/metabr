@@ -50,7 +50,7 @@ echo $contents; } ?>
 <A HREF="https://r-forge.r-project.org/scm/viewvc.php/*checkout*/pkg/MetabR_test.R?root=metabr"> <p>MetabR Program</A>
 <A HREF="https://r-forge.r-project.org/scm/viewvc.php/*checkout*/pkg/User Guide.pdf?root=metabr"> <p>User Guide</A>
 <A HREF="https://r-forge.r-project.org/scm/viewvc.php/*checkout*/pkg/Chicken_pos.csv?root=metabr"> <p>Chicken example data 1 (positive ions)</A>
-<A HREF="https://r-forge.r-project.org/scm/viewvc.php/*checkout*/pkg/Chicken_neg.csvR?root=metabr"> <p>Chicken example data 2 (negative ions)</A>
+<A HREF="https://r-forge.r-project.org/scm/viewvc.php/*checkout*/pkg/Chicken_neg.csv?root=metabr"> <p>Chicken example data 2 (negative ions)</A>
 <A HREF="https://r-forge.r-project.org/scm/viewvc.php/*checkout*/pkg/Mouse_pos.csv?root=metabr"> <p>Mouse example data 1 (positive ions)</A>
 <A HREF="https://r-forge.r-project.org/scm/viewvc.php/*checkout*/pkg/Mouse_neg.csv?root=metabr"> <p>Mouse example data 2 (negative ions)</A>
 
