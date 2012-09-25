@@ -1,4 +1,4 @@
-ID,Subject,Group,Strain,Day,Quantity,IS,Thymine,Urea,N-acetyl-glutamate,ADP,Tryptophan,Ornithine
+ID,Subject,Group,Strain,Day,Quantity,IS,Thymine,Urea,N-Acetyl-L-glutamate,ADP,Tryptophan,Ornithine
 BPA50_C_mouse1_Day1,BPA50_mouse1,BPA50,C,Day1,6.95,4859047,5516,90999,83209,NA,239072,15948
 BPA500_C_mouse2_Day1,BPA500_mouse2,BPA500,C,Day1,7.15,5238356,5185,69542,26407,686,100330,26342
 BPA5000_C_mouse3_Day1,BPA5000_mouse3,BPA5000,C,Day1,7.35,5257423,1957,130845,53170,3974,191639,43159

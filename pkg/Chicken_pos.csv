@@ -1,4 +1,4 @@
-ID,Subject,Group,Day,Quantity,IS,1-methyladenosine,Glutamine,Guanosine,O-acetyl-L-serine,Glucosamine,Thiamine
+ID,Subject,Group,Day,Quantity,IS,1-Methyladenosine,Glutamine,Guanosine,O-Acetyl-L-serine,Glucosamine,Thiamine
 Control_Chicken1_Day1,Control_Chicken1,Control,Day1,30.9,1483748.237,17045.00272,5172971.827,318554.0509,6489.001037,100062.9908,4808.576222
 Control_Chicken2_Day1,Control_Chicken2,Control,Day1,27.8,1293928.207,6833.001092,3920704.626,209893.0335,10953.00175,55246.62033,2916.349473
 Control_Chicken3_Day1,Control_Chicken3,Control,Day1,38.35,1032861.165,21344.00341,5242817.838,282514.0451,7457.001191,76217.13327,21381.5622
