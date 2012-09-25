@@ -469,7 +469,7 @@ btn.run <- gbutton(text = "Run", container = required.tab,
 	{ 	
 		criterion		= svalue(criterion)
 		plot.choice		= svalue(plot.choice)
-		log.base		= svalue(log.base)
+		log.base		<<- svalue(log.base)
 		f.cutoff		= svalue(f.cutoff)
 		p.cutoff		= svalue(p.cutoff)
 		random.factors	<<- svalue(random.factors)
@@ -566,12 +566,12 @@ time=paste(paste(Sys.Date(), "_", format(Sys.time(),"%H%M"), sep="" ) )
 ##Log-transform ion counts if specified by the user.
 ##########################################################################
 
-if (mode(log.base)=="numeric")
-	{
+if (mode(log.base)=="numeric" && !is.na(log.base))
+{
 	data.pos=cbind(data.pos[,1:(col.start-2)], log( as.matrix(data.pos[,(col.start-1):ncol(data.pos)]), log.base ))
 	if (mode(data.neg)=="list")
 	{data.neg=cbind(data.neg[,1:(col.start-2)], log( as.matrix(data.neg[,(col.start-1):ncol(data.neg)]), log.base )) }
-	} 
+} 
 
 #######
 ## 2 ##
@@ -1269,7 +1269,7 @@ for (i in 2:ncol(data.compile))
 		tukey.matrix<-as.matrix(TukeyHSD(fit)[[1]])
 
 		##if user selected log-transformation:
-		if (mode(log.base)=="numeric") 
+		if (mode(log.base)=="numeric" && !is.na(log.base)) 
 		{
 			foldch.dataframe=c()
 			aov.data.backtransformed=as.data.frame( cbind( as.character(aov.data$Group), 
@@ -1424,7 +1424,7 @@ if (criterionPP == "Pval" || criterion == "Qval")
 
 	for (i in 1:nrow(PPdata))
 	{
-		if (!is.na(as.numeric(PPdata[i,1])))
+		if (!is.na(as.numeric(as.matrix(PPdata)[i,1])))
 		{
 			if (as.numeric(PPdata[i,1]) >= as.numeric(1.0))
 			{
@@ -1481,7 +1481,7 @@ if (criterionPP == "Fold-change")
 
 	for (i in 1:nrow(PPdata))
 	{
-		if (!is.na(as.numeric(PPdata[i,1])))
+		if (!is.na(as.numeric(as.matrix(PPdata)[i,1])))
 		{
 			if (as.numeric(PPdata[i,1]) >= as.numeric(1.0))
 			{
@@ -1538,7 +1538,7 @@ if (criterionPP == "Pval+Fold-change" || criterionPP == "Qval+Fold-change")
 
 	for (i in 1:nrow(PPdata))
 	{
-		if (!is.na(as.numeric(PPdata[i,1])))
+		if (!is.na(as.numeric(as.matrix(PPdata)[i,1])))
 		{
 			if (as.numeric(PPdata[i,1]) >= as.numeric(1.0))
 			{
@@ -1593,13 +1593,15 @@ if (PPchoice == "Qval")
 	{pqvector=c(pqvector, paste("q=", pq1[i], sep="") ) }
 }
 
-PPmatrix = cbind(fcolor[which(!is.na(fcolor))], dot.size, pqvector, fontsizePP)
-PPdataframe = as.data.frame(PPmatrix)
-row.names(PPdataframe) = row.names(PPdata)[fsig]
+if (mode(fsig) != "NULL")
+{
+	PPmatrix = cbind(fcolor[which(!is.na(fcolor))], dot.size, pqvector, fontsizePP)
+	PPdataframe = as.data.frame(PPmatrix)
+	row.names(PPdataframe) = row.names(PPdata)[fsig]
 
-file.name=paste(output, "_colors_", treatment, "-", control, "_", time, ".csv", sep="")
-write.table(PPdataframe, file=file.name, col.names = FALSE, sep = ",")
-
+	file.name=paste(output, "_colors_", treatment, "-", control, "_", time, ".csv", sep="")
+	write.table(PPdataframe, file=file.name, col.names = FALSE, sep = ",")
+}
 
 
 
@@ -1768,18 +1770,20 @@ if (criterion == "Qval+Fold-change")
 	mean.plot.pval = format(mean.plot.pval, scientific=FALSE)
 }
 
-mean.plot.data = cbind(as.character(data.compile$Group), mean.plot.data)
-colnames(mean.plot.data)[1] = "Group"
-
-mean.plot.data = as.data.frame(mean.plot.data)
-mean.plot.foldch = as.data.frame(mean.plot.foldch)
-mean.plot.pval = as.data.frame(mean.plot.pval)
 
 library(R.oo)
 
-
-if (mode(mean.plot.data)=="list")
+if (mode(mean.plot.data) != "NULL")
 {#1
+	mean.plot.data = cbind(as.character(data.compile$Group), mean.plot.data)
+	colnames(mean.plot.data)[1] = "Group"
+
+	mean.plot.data = as.data.frame(mean.plot.data)
+	mean.plot.foldch = as.data.frame(mean.plot.foldch)
+	mean.plot.pval = as.data.frame(mean.plot.pval)
+
+
+
 	pdf(file=paste(output, "_meanplots_", time, ".pdf", sep=""), width=width.mean, height=height.mean)
 	par(mfrow=mfrow.mean, mar=mar.mean, las=las.mean, cex=cex.mean, cex.axis=cex.axis.mean, cex.lab=cex.lab.mean, 
 		cex.main=cex.main.mean, cex.sub=cex.sub.mean, mex=mex.mean)
