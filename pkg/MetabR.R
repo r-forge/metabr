@@ -210,26 +210,36 @@ ok = gbutton(text="OK", container=d,handler = function (...)
 ##Begining of MetabR GUI and function
 
 
-w <- gwindow("MetabR", width=800, height=300)
-nb <- gnotebook(tab.pos=2, container=w)
+w = gwindow("MetabR", width=800, height=300)
+nb = gnotebook(tab.pos=2, container=w)
+
+fixed.continuous = 0
+random.factors = 0
 
 ##Required parameters##
 
 required.tab = ggroup(container=nb, label="Required", use.scrollwindow = TRUE, horizontal=TRUE)  
 
-required.1=gframe(container=required.tab, horizontal=FALSE)
-fixed.continuous.label <- glabel("Fixed-effect variables", container=required.1)
-fixed.continuous = gcheckboxgroup(colnames(data.pos)[3:(col.start-2)], container=required.1, use.table=TRUE, coerce.with=svalue)
+if (as.numeric(col.start) >= 5)
+{
+	required.1 = gframe(container=required.tab, horizontal=FALSE)
+	fixed.continuous.label = glabel("Fixed-effect variables", container=required.1)
+	fixed.continuous = gcheckboxgroup(colnames(data.pos)[3:(col.start-2)], container=required.1, 
+		use.table=TRUE, coerce.with=svalue)
 
-random.factors.label <- glabel("Random-effect variables", container = required.1)
+	random.factors.label = glabel("Random-effect variables", container = required.1)
 
-random.factors = gcheckboxgroup(colnames(data.pos)[3:(col.start-2)], container=required.1, use.table=TRUE, coerce.with=svalue)
+	random.factors = gcheckboxgroup(colnames(data.pos)[3:(col.start-2)], container=required.1, 
+		use.table=TRUE, coerce.with=svalue)
+}
 
-required.2=gframe(container=required.tab, horizontal=FALSE)
-criterion.label=glabel("Criterion", container=required.2)
-criterion=gradio(c("Pval", "Qval", "Fold-change", "Pval+Fold-change", "Qval+Fold-change"), selected=1, horizontal=FALSE, container=required.2)
-plot.choice.label=glabel("Mean plot choice", container=required.2)
-plot.choice=gradio(c("Pval", "Qval"), selected=1, horizontal=FALSE, container=required.2)
+
+required.2 = gframe(container=required.tab, horizontal=FALSE)
+criterion.label = glabel("Criterion", container=required.2)
+criterion = gradio(c("Pval", "Qval", "Fold-change", "Pval+Fold-change", "Qval+Fold-change"), 
+		selected=1, horizontal=FALSE, container=required.2)
+plot.choice.label = glabel("Mean plot choice", container=required.2)
+plot.choice = gradio(c("Pval", "Qval"), selected=1, horizontal=FALSE, container=required.2)
 
 required.3 = gframe(container=required.tab, horizontal=FALSE)
 log.base.label <- glabel("Log base", container = required.3)
@@ -242,51 +252,53 @@ output.label <- glabel("Output", container = required.3)
 output<- gedit("Exp1", container = required.3)
 
 
+	#}) #stop here to just check correct parameter input through GUI
+
 ##Mean plot tab (optional)##
 
 meanplot.tab = ggroup(container=nb, label="Mean plot", use.scrollwindow = FALSE, horizontal=TRUE)   
 
-meanplot.1=gframe(container=meanplot.tab, horizontal=FALSE)
-las.mean.label <- glabel("las", container = meanplot.1)
-las.mean<- gedit("3", container = meanplot.1, width=1, coerce.with=as.numeric)
-cex.mean.label <- glabel("cex (par)", container = meanplot.1)
-cex.mean<- gedit("1", container = meanplot.1, width=1, coerce.with=as.numeric)
-cex.axis.mean.label <- glabel("cex.axis", container = meanplot.1)
-cex.axis.mean<- gedit("1.2", container = meanplot.1, width=1, coerce.with=as.numeric)
-cex.lab.mean.label <- glabel("cex.lab", container = meanplot.1)
-cex.lab.mean<- gedit("1.2", container = meanplot.1, width=1, coerce.with=as.numeric)
+meanplot.1 = gframe(container=meanplot.tab, horizontal=FALSE)
+las.mean.label = glabel("las", container = meanplot.1)
+las.mean = gedit("3", container = meanplot.1, width=1, coerce.with=as.numeric)
+cex.mean.label = glabel("cex (par)", container = meanplot.1)
+cex.mean = gedit("1", container = meanplot.1, width=1, coerce.with=as.numeric)
+cex.axis.mean.label = glabel("cex.axis", container = meanplot.1)
+cex.axis.mean = gedit("1.2", container = meanplot.1, width=1, coerce.with=as.numeric)
+cex.lab.mean.label = glabel("cex.lab", container = meanplot.1)
+cex.lab.mean = gedit("1.2", container = meanplot.1, width=1, coerce.with=as.numeric)
 
-meanplot.2=gframe(container=meanplot.tab, horizontal=FALSE)
-cex.main.mean.label <- glabel("cex.main", container = meanplot.2)
-cex.main.mean<- gedit("1.2", container = meanplot.2, coerce.with=as.numeric, width=1)
-cex.sub.mean.label <- glabel("cex.sub", container = meanplot.2)
-cex.sub.mean<- gedit("1.2", container = meanplot.2, coerce.with=as.numeric, width=1)
-mex.mean.label <- glabel("mex", container = meanplot.2)
-mex.mean<- gedit("1.2", container = meanplot.2, coerce.with=as.numeric, width=1)
-cex.mean.charsize.label <- glabel("cex (text)", container = meanplot.2)
-cex.mean.charsize<- gedit("1.2", container = meanplot.2, coerce.with=as.numeric, width=1)
+meanplot.2 = gframe(container=meanplot.tab, horizontal=FALSE)
+cex.main.mean.label = glabel("cex.main", container = meanplot.2)
+cex.main.mean = gedit("1.2", container = meanplot.2, coerce.with=as.numeric, width=1)
+cex.sub.mean.label = glabel("cex.sub", container = meanplot.2)
+cex.sub.mean = gedit("1.2", container = meanplot.2, coerce.with=as.numeric, width=1)
+mex.mean.label = glabel("mex", container = meanplot.2)
+mex.mean = gedit("1.2", container = meanplot.2, coerce.with=as.numeric, width=1)
+cex.mean.charsize.label = glabel("cex (text)", container = meanplot.2)
+cex.mean.charsize = gedit("1.2", container = meanplot.2, coerce.with=as.numeric, width=1)
 
-meanplot.3=gframe(container=meanplot.tab, horizontal=FALSE)
-height.mean.label <- glabel("height", container = meanplot.3)
-height.mean<- gedit("7", container = meanplot.3, coerce.with=as.numeric, width=10)
-width.mean.label <- glabel("width", container = meanplot.3)
-width.mean<- gedit("7", container = meanplot.3, coerce.with=as.numeric, width=10)
-mfrow.mean.label <- glabel("mfrow", container = meanplot.3)
-mfrow.mean<- gedit("c(1,1)", container = meanplot.3, coerce.with=svalue, width=10)
-mar.mean.label <- glabel("mar", container = meanplot.3)
-mar.mean<- gedit("c(6,4,3,1)", container = meanplot.3, coerce.with=svalue, width=10)
+meanplot.3 = gframe(container=meanplot.tab, horizontal=FALSE)
+height.mean.label = glabel("height", container = meanplot.3)
+height.mean = gedit("7", container = meanplot.3, coerce.with=as.numeric, width=10)
+width.mean.label = glabel("width", container = meanplot.3)
+width.mean = gedit("7", container = meanplot.3, coerce.with=as.numeric, width=10)
+mfrow.mean.label = glabel("mfrow", container = meanplot.3)
+mfrow.mean = gedit("c(1,1)", container = meanplot.3, coerce.with=svalue, width=10)
+mar.mean.label = glabel("mar", container = meanplot.3)
+mar.mean = gedit("c(6,4,3,1)", container = meanplot.3, coerce.with=svalue, width=10)
 
 
 ##Residual plot##	
 
 residual.tab = ggroup(container=nb, label="Residual plot, unlabeled", horizontal=TRUE)   
 
-residual.1=gframe(container=residual.tab, horizontal=FALSE)
-las.summaryplot.label <- glabel("las", container = residual.1)
-las.summaryplot<- gedit("3", container = residual.1, coerce.with=as.numeric, width=10)
-cex.summaryplot.label <- glabel("cex", container = residual.1)
-cex.summaryplot<- gedit("1", container = residual.1, coerce.with=as.numeric, width=10)
-cex.axis.summaryplot.label <- glabel("cex.axis", container = residual.1)
+residual.1 = gframe(container=residual.tab, horizontal=FALSE)
+las.summaryplot.label = glabel("las", container = residual.1)
+las.summaryplot = gedit("3", container = residual.1, coerce.with=as.numeric, width=10)
+cex.summaryplot.label = glabel("cex", container = residual.1)
+cex.summaryplot = gedit("1", container = residual.1, coerce.with=as.numeric, width=10)
+cex.axis.summaryplot.label = glabel("cex.axis", container = residual.1)
 cex.axis.summaryplot<- gedit("1.2", container = residual.1, coerce.with=as.numeric, width=10)
 cex.lab.summaryplot.label <- glabel("cex.lab", container = residual.1)
 cex.lab.summaryplot<- gedit("1.2", container = residual.1, coerce.with=as.numeric, width=10)
@@ -472,8 +484,12 @@ btn.run <- gbutton(text = "Run", container = required.tab,
 		log.base		<<- svalue(log.base)
 		f.cutoff		= svalue(f.cutoff)
 		p.cutoff		= svalue(p.cutoff)
-		random.factors	<<- svalue(random.factors)
-		fixed.continuous	<<- svalue(fixed.continuous)
+
+		if (as.numeric(col.start) >= 5)
+		{	
+			random.factors	<<- svalue(random.factors)
+			fixed.continuous	<<- svalue(fixed.continuous)
+		}
 		output		= svalue(output)
 		
 		las.mean		= svalue(las.mean)	
@@ -599,7 +615,7 @@ neg.bad=c()
 
 #######################################################################################################################
 
-if (length(fixed.continuous)!=0)
+if (length(fixed.continuous)!=0 && as.numeric(col.start) >= 5)
 {
 	fixed.continuous.model="+"
 	for (yy in 1:length(fixed.continuous))
@@ -635,7 +651,7 @@ if (length(fixed.continuous)!=0)
 #	fixed.categorical.model=c()
 #}
 
-if ( length(random.factors)!=0 )
+if ( length(random.factors)!=0 && as.numeric(col.start) >= 5)
 {
 	r.include=c()
 	for (r in random.factors)
@@ -758,7 +774,7 @@ pos.bad=c()
 
 #######################################################################################################################
 
-if (length(fixed.continuous)!=0)
+if (length(fixed.continuous)!=0 && as.numeric(col.start) >= 5)
 {
 	fixed.continuous.model="+"
 	for (yy in 1:length(fixed.continuous))
@@ -794,7 +810,7 @@ if (length(fixed.continuous)!=0)
 #	fixed.categorical.model=c()
 #}
 
-if ( length(random.factors)!=0 )
+if ( length(random.factors)!=0 && as.numeric(col.start) >= 5)
 {
 	r.include=c()
 	for (r in random.factors)
@@ -1353,6 +1369,7 @@ foldchange.all.foldch.dataframe=format(foldchange.all.foldch.dataframe, scientif
 
 library(qvalue)
 
+qgood=c()
 qvalues = matrix(NA, nrow(tukey.all.pval.dataframe), ncol(tukey.all.pval.dataframe))
 colnames(qvalues) = colnames(tukey.all.pval.dataframe)
 row.names(qvalues) = row.names(tukey.all.pval.dataframe)
@@ -1361,8 +1378,67 @@ for (i in 1:ncol(tukey.all.pval.dataframe))
 {
 	pcol = tukey.all.pval.dataframe[,i]
 	ppos = which(!is.na(as.numeric(as.vector(pcol))))
-	q = qvalue(as.numeric(as.vector(pcol[ppos])))
-	qvalues[ppos, i] = q$qvalues	
+	p = as.numeric(as.vector(pcol[ppos]))
+
+###########################################################################################################################
+	lambda = seq(0, 0.9, 0.05)
+	pi0.method = "smoother"
+	fdr.level = NULL
+	robust = FALSE
+	gui = FALSE
+	smooth.df = 3
+	smooth.log.pi0 = FALSE 
+
+	m <- length(p)
+  
+	pi0 <- rep(0, length(lambda))
+	for (j in 1:length(lambda)) {
+	pi0[j] <- mean(p >= lambda[j])/(1 - lambda[j])
+	}
+	if (smooth.log.pi0) 
+	pi0 <- log(pi0)
+	spi0 <- smooth.spline(lambda, pi0, df = smooth.df)
+	pi0 <- predict(spi0, x = max(lambda))$y
+	if (smooth.log.pi0) 
+	pi0 <- exp(pi0)
+	pi0 <- min(pi0, 1)
+	        
+	if (pi0 > 0) 
+	{
+		u <- order(p)
+	    	qvalue.rank <- function(x) {
+	    	idx <- sort.list(x)
+	    	fc <- factor(x)
+	    	nl <- length(levels(fc))
+	    	bin <- as.integer(fc)
+	    	tbl <- tabulate(bin)
+	    	cs <- cumsum(tbl)
+	    	tbl <- rep(cs, tbl)
+		tbl[idx] <- tbl
+	      return(tbl)
+	    	}
+	    
+		v <- qvalue.rank(p)
+		qvalue <- pi0 * m * p/v
+		if (robust) {
+		qvalue <- pi0 * m * p/(v * (1 - (1 - p)^m))
+	    	}
+	    
+		qvalue[u[m]] <- min(qvalue[u[m]], 1)
+	    	for (ii in (m - 1):1) {
+	      qvalue[u[ii]] <- min(qvalue[u[ii]], qvalue[u[ii + 1]], 1)
+	    	}
+
+	     	retval <- list(pi0 = pi0, qvalues = qvalue, 
+	      	pvalues = p, lambda = lambda)
+
+	    	class(retval) <- "qvalue"
+
+		qvalues[ppos, i] = retval$qvalues 
+		qgood = c(qgood, i)
+	}
+###########################################################################################################################
+
 }
 qvalues.dataframe = format(qvalues, scientific = FALSE)
 qvalues.dataframe = as.data.frame(qvalues.dataframe)
@@ -2048,6 +2124,8 @@ mean.plot.pval = as.data.frame(mean.plot.pval)
 ##vs. Y (Metabolite across groups).  The purpose is to show that normalization removes the relationship
 ##between the non-interesting variable and metabolite level.
 ########################################################################################################
+if (as.numeric(col.start) >= 5)
+{
 pdf(file=paste(output, "_pre.v.post_", time, ".pdf", sep=""), width=width.prevpost, height=height.prevpost)
 par(mfrow=mfrow.prevpost, #mar=mar.prevpost, 
 	las=las.prevpost, cex=cex.prevpost, cex.axis=cex.axis.prevpost, 
@@ -2376,6 +2454,7 @@ if (mode(data.neg)=="list")
 			}
 		}
 dev.off()
+} #end of section 9 pre- vs. post-normalization plotting (if there were variables to normalize to)
 
 options(scipen=0)
 
